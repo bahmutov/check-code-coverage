@@ -10,11 +10,11 @@ jobs:
       - name: Install NPM dependencies 📦
         uses: bahmutov/npm-install@v1
 
-      - name: Run tests 🧪
-        run: npm test
-
-      - name: Show GitHub variables 📊
-        run: npm run github-demo
+      - name: Check all covered files 📊
+        run: |
+          node bin/check-coverage main1.js
+          node bin/check-coverage to/main2.js
+          node bin/only-covered main1.js main2.js
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
