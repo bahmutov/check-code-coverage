@@ -1,4 +1,4 @@
-# check-code-coverage
+# check-code-coverage [![ci status][ci image]][ci url]
 > Utilities for checking the coverage produced by NYC against extra or missing files
 
 ## Use
@@ -10,3 +10,6 @@ npx check-coverage main.js
 # check if .nyc_output/out.json has files foo.js and bar.js covered and nothing else
 npx only-covered foo.js bar.js
 ```
+
+[ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
+[ci url]: https://github.com/bahmutov/check-code-coverage/actions
