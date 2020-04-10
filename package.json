@@ -3,7 +3,7 @@
   "version": "0.0.0-development",
   "description": "Utilities for checking the coverage produced by NYC against extra or missing files",
   "main": "index.js",
-  "alias": {
+  "bin": {
     "check-coverage": "bin/check-coverage.js",
     "only-covered": "bin/only-covered.js"
   },
