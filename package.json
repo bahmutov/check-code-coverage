@@ -1,19 +1,22 @@
 {
   "name": "check-code-coverage",
-  "version": "1.0.0",
+  "version": "0.0.0-development",
   "description": "Utilities for checking the coverage produced by NYC against extra or missing files",
   "main": "index.js",
   "alias": {
     "check-coverage": "bin/check-coverage.js",
     "only-covered": "bin/only-covered.js"
   },
-  "files": ["bin"],
+  "files": [
+    "bin"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "semantic-release": "semantic-release"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bahmutov/check-code-coverage.git"
+    "url": "https://github.com/bahmutov/check-code-coverage.git"
   },
   "keywords": [
     "coverage",
@@ -26,5 +29,11 @@
   "bugs": {
     "url": "https://github.com/bahmutov/check-code-coverage/issues"
   },
-  "homepage": "https://github.com/bahmutov/check-code-coverage#readme"
+  "homepage": "https://github.com/bahmutov/check-code-coverage#readme",
+  "devDependencies": {
+    "semantic-release": "^17.0.4"
+  },
+  "dependencies": {
+    "lodash": "4.17.15"
+  }
 }
