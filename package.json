@@ -1,0 +1,30 @@
+{
+  "name": "check-code-coverage",
+  "version": "1.0.0",
+  "description": "Utilities for checking the coverage produced by NYC against extra or missing files",
+  "main": "index.js",
+  "alias": {
+    "check-coverage": "bin/check-coverage.js",
+    "only-covered": "bin/only-covered.js"
+  },
+  "files": ["bin"],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahmutov/check-code-coverage.git"
+  },
+  "keywords": [
+    "coverage",
+    "code-coverage",
+    "utility",
+    "nyc"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahmutov/check-code-coverage/issues"
+  },
+  "homepage": "https://github.com/bahmutov/check-code-coverage#readme"
+}
