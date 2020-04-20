@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-check
 const { join } = require('path')
 
 const filename = process.argv[2]

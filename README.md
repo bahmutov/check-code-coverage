@@ -11,5 +11,13 @@ npx check-coverage main.js
 npx only-covered foo.js bar.js
 ```
 
+## only-covered
+
+By default `only-covered` script reads `.nyc_output/out.json` file from the current working directory. You can specify a different file using `--from` parameter
+
+```shell
+only-covered --from examples/exclude-files/coverage/coverage-final.json main.js
+```
+
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
 [ci url]: https://github.com/bahmutov/check-code-coverage/actions

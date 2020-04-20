@@ -1,8 +1,14 @@
 #!/usr/bin/env node
-const { join } = require('path')
+// @ts-check
+const { join, resolve } = require('path')
 const _ = require('lodash')
+const arg = require('arg')
 
-const filenames = process.argv.slice(2)
+const args = arg({
+  '--from': String, // input filename, by default ".nyc_output/out.json"
+})
+
+const filenames = args._
 if (!filenames.length) {
   console.error('Usage: node %s <file name 1> <file name 2>', __filename)
   process.exit(1)
@@ -11,7 +17,10 @@ if (!filenames.length) {
 const shouldBeCovered = filepath =>
   filenames.some(name => filepath.endsWith(name))
 
-const coverageFilename = join(process.cwd(), '.nyc_output', 'out.json')
+const fromFilename = args['--from'] || join('.nyc_output', 'out.json')
+const coverageFilename = resolve(fromFilename)
+console.log('reading coverage results from %s', coverageFilename)
+
 const coverage = require(coverageFilename)
 
 const coveredFilepaths = Object.keys(coverage).map(name => coverage[name].path)
