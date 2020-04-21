@@ -1,13 +1,21 @@
 #!/usr/bin/env node
 // @ts-check
-const { join } = require('path')
+const { join, resolve } = require('path')
+const arg = require('arg')
 
-const filename = process.argv[2]
+const args = arg({
+  '--from': String, // input filename, by default ".nyc_output/out.json"
+})
+
+const filename = args._[0]
 if (!filename) {
   console.error('Usage: node %s <file name>', __filename)
   process.exit(1)
 }
-const coverageFilename = join(process.cwd(), '.nyc_output', 'out.json')
+
+const fromFilename = args['--from'] || join('.nyc_output', 'out.json')
+const coverageFilename = resolve(fromFilename)
+
 const coverage = require(coverageFilename)
 const fileCoverageKey = Object.keys(coverage).find(name => {
   const fileCover = coverage[name]

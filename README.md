@@ -17,6 +17,7 @@ By default `only-covered` script reads `.nyc_output/out.json` file from the curr
 
 ```shell
 only-covered --from examples/exclude-files/coverage/coverage-final.json main.js
+check-coverage --from examples/exclude-files/coverage/coverage-final.json main.js
 ```
 
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
