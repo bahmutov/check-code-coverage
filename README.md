@@ -44,10 +44,15 @@ update-badge
 
 If the coverage summary has 96%, then the above badge would be updated to
 
-
     ![code coverage](https://img.shields.io/badge/code--coverage-96%-brightgreen)
 
 Related project: [dependency-version-badge](https://github.com/bahmutov/dependency-version-badge)
+
+The badges will have different colors, depending on the coverage, see [bin/update-badge.js](bin/update-badge.js)
+
+## Debug
+
+To see verbose log messages, run with `DEBUG=check-code-coverage` environment variable
 
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
 [ci url]: https://github.com/bahmutov/check-code-coverage/actions
