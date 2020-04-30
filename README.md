@@ -1,4 +1,4 @@
-# check-code-coverage [![ci status][ci image]][ci url]
+# check-code-coverage [![ci status][ci image]][ci url] ![mock coverage](https://img.shields.io/badge/code--coverage-100-brightgreen)
 > Utilities for checking the coverage produced by NYC against extra or missing files
 
 ## Use
@@ -29,6 +29,20 @@ check-total
 # with default options
 check-total --from coverage/coverage-summary.json --min 80
 ```
+
+## update-badge
+
+If your README.md includes Shields.io badge, like this
+
+    ![code coverage](https://img.shields.io/badge/code--coverage-80-brightgreen)
+
+You can update it using statements covered percentage from `coverage/coverage-summary.json` by running
+
+```shell
+update-badge
+```
+
+Related project: [dependency-version-badge](https://github.com/bahmutov/dependency-version-badge)
 
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
 [ci url]: https://github.com/bahmutov/check-code-coverage/actions
