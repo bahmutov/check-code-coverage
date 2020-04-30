@@ -42,5 +42,7 @@ You can update it using statements covered percentage from `coverage/coverage-su
 update-badge
 ```
 
+Related project: [dependency-version-badge](https://github.com/bahmutov/dependency-version-badge)
+
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
 [ci url]: https://github.com/bahmutov/check-code-coverage/actions
