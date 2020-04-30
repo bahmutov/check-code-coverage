@@ -19,6 +19,9 @@ jobs:
       - name: Check totals 🛡
         run: node bin/check-total --min 90
 
+      - name: Update code coverage badge 🥇
+        run: node bin/update-badge
+
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
         env:
