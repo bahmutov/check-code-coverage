@@ -1,4 +1,4 @@
-# check-code-coverage [![ci status][ci image]][ci url] ![mock coverage](https://img.shields.io/badge/code--coverage-100-brightgreen)
+# check-code-coverage [![ci status][ci image]][ci url] ![mock coverage](https://img.shields.io/badge/code--coverage-100%-brightgreen)
 > Utilities for checking the coverage produced by NYC against extra or missing files
 
 ## Use
@@ -34,13 +34,18 @@ check-total --from coverage/coverage-summary.json --min 80
 
 If your README.md includes Shields.io badge, like this
 
-    ![code coverage](https://img.shields.io/badge/code--coverage-80-brightgreen)
+    ![code coverage](https://img.shields.io/badge/code--coverage-80%-brightgreen)
 
 You can update it using statements covered percentage from `coverage/coverage-summary.json` by running
 
 ```shell
 update-badge
 ```
+
+If the coverage summary has 96%, then the above badge would be updated to
+
+
+    ![code coverage](https://img.shields.io/badge/code--coverage-96%-brightgreen)
 
 Related project: [dependency-version-badge](https://github.com/bahmutov/dependency-version-badge)
 

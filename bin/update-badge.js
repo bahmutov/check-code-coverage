@@ -15,9 +15,9 @@ function updateBadge() {
   function replaceShield() {
     // note, Shields.io escaped '-' with '--'
     const coverageRe = new RegExp(
-      'https://img\\.shields\\.io/badge/code--coverage-(\\d+)-brightgreen',
+      'https://img\\.shields\\.io/badge/code--coverage-(\\d+)%-brightgreen',
     )
-    const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}-brightgreen`
+    const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}%-brightgreen`
 
     const updatedReadmeText = readmeText.replace(
       coverageRe,
