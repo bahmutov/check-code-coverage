@@ -5,6 +5,13 @@ const debug = require('debug')('check-code-coverage')
 const path = require('path')
 const fs = require('fs')
 const os = require('os')
+const arg = require('arg')
+
+const args = arg({
+  '--from': String, // input json-summary filename, by default "coverage/coverage-summary.json"
+  '--set': String // so we can convert "78%" into numbers ourselves
+})
+debug('args: %o', args)
 
 const availableColors = ['red', 'yellow', 'green', 'brightgreen']
 
@@ -23,10 +30,30 @@ function getColor(coveredPercent) {
   return 'brightgreen'
 }
 
-function updateBadge() {
-  const coverageFilename = path.join(process.cwd(), 'coverage', 'coverage-summary.json')
-  const coverage = require(coverageFilename)
-  const pct = coverage.total.statements.pct
+function readCoverage(filename) {
+  if (!filename) {
+    filename = path.join(process.cwd(), 'coverage', 'coverage-summary.json')
+  }
+  debug('reading coverage summary from: %s', filename)
+  const coverage = require(filename)
+  return coverage.total.statements.pct
+}
+
+function updateBadge(args) {
+  let pct = 0
+  if (args['--set']) {
+    // make sure we can handle "--set 70" and "--set 70%"
+    pct = parseFloat(args['--set'])
+    debug('using coverage number: %d', pct)
+  } else {
+    pct = readCoverage(args['--from'])
+  }
+  if (pct < 0) {
+    pct = 0
+  } else if (pct > 100) {
+    pct = 100
+  }
+  debug('clamped coverage: %d', pct)
 
   const readmeFilename = path.join(process.cwd(), 'README.md')
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
@@ -85,4 +112,4 @@ function updateBadge() {
   }
 }
 
-updateBadge()
+updateBadge(args)
