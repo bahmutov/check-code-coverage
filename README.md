@@ -20,5 +20,15 @@ only-covered --from examples/exclude-files/coverage/coverage-final.json main.js
 check-coverage --from examples/exclude-files/coverage/coverage-final.json main.js
 ```
 
+## check-total
+
+If you generate coverage report using reporter `json-summary`, you can check the total statements percentage
+
+```shell
+check-total
+# with default options
+check-total --from coverage/coverage-summary.json --min 80
+```
+
 [ci image]: https://github.com/bahmutov/check-code-coverage/workflows/ci/badge.svg?branch=master
 [ci url]: https://github.com/bahmutov/check-code-coverage/actions
