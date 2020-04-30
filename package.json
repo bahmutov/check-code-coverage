@@ -5,7 +5,8 @@
   "main": "index.js",
   "bin": {
     "check-coverage": "bin/check-coverage.js",
-    "only-covered": "bin/only-covered.js"
+    "only-covered": "bin/only-covered.js",
+    "check-total": "bin/check-total.js"
   },
   "files": [
     "bin"
