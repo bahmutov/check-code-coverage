@@ -5,19 +5,36 @@
 
 ```shell
 npm i -D check-code-coverage
-# check if .nyc_output/out.json has 100% code coverage for main.js
-npx check-coverage main.js
 # check if .nyc_output/out.json has files foo.js and bar.js covered and nothing else
 npx only-covered foo.js bar.js
 ```
 
-## only-covered
+## check-coverage
 
-By default `only-covered` script reads `.nyc_output/out.json` file from the current working directory. You can specify a different file using `--from` parameter
+Checks if the file is present in the output JSON file and has 100% statement coverage
 
 ```shell
-only-covered --from examples/exclude-files/coverage/coverage-final.json main.js
+# check if .nyc_output/out.json has 100% code coverage for main.js
+npx check-coverage main.js
+# read coverage report from particular JSON file
 check-coverage --from examples/exclude-files/coverage/coverage-final.json main.js
+```
+
+The file has to end with "main.js". You can specify part of the path, like this
+
+```shell
+npx check-coverage src/app/main.js
+```
+
+## only-covered
+
+Check if the coverage JSON file only the given list of files and nothing else. By default `only-covered` script reads `.nyc_output/out.json` file from the current working directory. You can specify a different file using `--from` parameter.
+
+```shell
+# check if coverage has info about two files and nothing else
+only-covered src/lib/utils.ts src/main.js
+# read coverage from another file and check if it only has info on "main.js"
+only-covered --from examples/exclude-files/coverage/coverage-final.json main.js
 ```
 
 ## check-total
