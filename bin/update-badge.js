@@ -4,6 +4,7 @@
 const debug = require('debug')('check-code-coverage')
 const path = require('path')
 const fs = require('fs')
+const os = require('os')
 
 const availableColors = ['red', 'yellow', 'green', 'brightgreen']
 
@@ -47,13 +48,31 @@ function updateBadge() {
     debug('coverage regex: "%s"', coverageRe)
     debug('new coverage badge: "%s"', coverageBadge)
 
-    const updatedReadmeText = readmeText.replace(
+    let found
+    let updatedReadmeText = readmeText.replace(
       coverageRe,
       (match) => {
+        found = true
         debug('match: %o', match)
         return coverageBadge
       },
     )
+
+    if (!found) {
+      console.log('⚠️ Could not find code coverage badge in file %s', readmeFilename)
+      console.log('Insert new badge on the first line')
+      // use NPM package name as label to flag where this badge is coming from
+      const badge = `![check-code-coverage](${coverageBadge})`
+      debug('inserting new badge: %s', badge)
+
+      const lines = readmeText.split(os.EOL)
+      if (lines.length < 1) {
+        console.error('File %s has no lines, cannot insert code coverage badge', readmeFilename)
+        return readmeText
+      }
+      lines[0] += ' ' + badge
+      updatedReadmeText = lines.join(os.EOL)
+    }
     return updatedReadmeText
   }
 
