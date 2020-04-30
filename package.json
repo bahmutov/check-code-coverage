@@ -6,7 +6,8 @@
   "bin": {
     "check-coverage": "bin/check-coverage.js",
     "only-covered": "bin/only-covered.js",
-    "check-total": "bin/check-total.js"
+    "check-total": "bin/check-total.js",
+    "update-badge": "bin/update-badge.js"
   },
   "files": [
     "bin"
