@@ -69,9 +69,9 @@ function updateBadge(args) {
 
     // note, Shields.io escaped '-' with '--'
     const coverageRe = new RegExp(
-      `https://img\\.shields\\.io/badge/code--coverage-\\d+%-${availableColorsReStr}`,
+      `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`,
     )
-    const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}%-${color}`
+    const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}%25-${color}`
     debug('coverage regex: "%s"', coverageRe)
     debug('new coverage badge: "%s"', coverageBadge)
 
