@@ -1,4 +1,4 @@
-# check-code-coverage [![ci status][ci image]][ci url] ![check-code-coverage](https://img.shields.io/badge/code--coverage-100%-brightgreen)
+# check-code-coverage [![ci status][ci image]][ci url]
 > Utilities for checking the coverage produced by NYC against extra or missing files
 
 ## Use
