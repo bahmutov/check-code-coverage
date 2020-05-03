@@ -31,7 +31,7 @@ jobs:
             --header 'content-type: application/json' \
             --data '{
                 "state": "success",
-                "description": "REST status 📯",
+                "description": "REST commit status",
                 "context": "a test"
               }'
 
