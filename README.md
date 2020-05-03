@@ -87,7 +87,7 @@ If you run your tests on [GitHub Actions](https://glebbahmutov.com/blog/trying-g
 
 ```yaml
 - name: Set code coverage commit status 📫
-  run: node bin/set-gh-status
+  run: npx set-gh-status
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
