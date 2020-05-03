@@ -20,6 +20,9 @@ async function setGitHubCommitStatus(options, envOptions) {
     sha: envOptions.sha
   })
 
+  // REST call to GitHub API
+  // https://developer.github.com/v3/repos/statuses/
+  // https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#example-calling-the-rest-api
   const url = `https://api.github.com/repos/${envOptions.repository}/statuses/${envOptions.sha}`
   // @ts-ignore
   const res = await got.post(url, {
@@ -29,11 +32,10 @@ async function setGitHubCommitStatus(options, envOptions) {
     json: {
       context: 'code-coverage',
       state: 'success',
-      description: `Tests have covered ${pct}% of statements`
+      description: `${pct}% of statements`
     }
   })
-  console.log('response')
-  console.log(res)
+  console.log('response status: %d %s', res.statusCode, res.statusMessage)
 }
 
 function checkEnvVariables(env) {

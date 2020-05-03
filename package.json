@@ -35,7 +35,6 @@
   },
   "homepage": "https://github.com/bahmutov/check-code-coverage#readme",
   "devDependencies": {
-    "octokit-cli": "0.2.0",
     "semantic-release": "^17.0.4"
   },
   "dependencies": {

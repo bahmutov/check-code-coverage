@@ -35,25 +35,10 @@ jobs:
                 "context": "a test"
               }'
 
-      - name: Set commit using script
+      - name: Set code coverage commit status 📫
         run: node bin/set-gh-status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Set commit status 📫
-        # variables available in GitHub container by default
-        # https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables
-        # https://developer.github.com/v3/activity/events/types/#statusevent
-        # state: pending | success | failure | error
-        run: |
-          npx octokit repos create-status \
-            --owner bahmutov \
-            --repo check-code-coverage \
-            --state success \
-            --sha $GITHUB_SHA \
-            --context "Testing status"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
