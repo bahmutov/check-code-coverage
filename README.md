@@ -81,6 +81,23 @@ update-badge --set 78%
 
 Related project: [dependency-version-badge](https://github.com/bahmutov/dependency-version-badge)
 
+## set-gh-status
+
+If you run your tests on [GitHub Actions](https://glebbahmutov.com/blog/trying-github-actions/), there is an easy way to add commit status with code coverage percentage. From your CI workflow use command:
+
+```yaml
+- name: Set code coverage commit status 📫
+  run: node bin/set-gh-status
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+Which should show a commit status message like:
+
+![Commit status check](images/commit-status.png)
+
+This script reads the code coverage summary from `coverage/coverage-summary.json` by default (you can specific a different file name using `--from` option) and posts the commit status, always passing for now.
+
 ## Debug
 
 To see verbose log messages, run with `DEBUG=check-code-coverage` environment variable

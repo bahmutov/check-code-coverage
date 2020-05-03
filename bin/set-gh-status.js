@@ -23,6 +23,16 @@ async function setGitHubCommitStatus(options, envOptions) {
   // REST call to GitHub API
   // https://developer.github.com/v3/repos/statuses/
   // https://help.github.com/en/actions/configuring-and-managing-workflows/authenticating-with-the-github_token#example-calling-the-rest-api
+  // a typical request would be like:
+  // curl --request POST \
+  // --url https://api.github.com/repos/${{ github.repository }}/statuses/${{ github.sha }} \
+  // --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' \
+  // --header 'content-type: application/json' \
+  // --data '{
+  //     "state": "success",
+  //     "description": "REST commit status",
+  //     "context": "a test"
+  //   }'
   const url = `https://api.github.com/repos/${envOptions.repository}/statuses/${envOptions.sha}`
   // @ts-ignore
   const res = await got.post(url, {
