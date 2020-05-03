@@ -33,7 +33,7 @@ jobs:
               "state": "success",
               "description": "REST status 📯",
               "context": "a test"
-            }'
+              }'
 
       - name: Set commit status 📫
         # variables available in GitHub container by default
