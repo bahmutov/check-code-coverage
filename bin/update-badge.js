@@ -6,6 +6,7 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const arg = require('arg')
+const {readCoverage, toPercent} = require('..')
 
 const args = arg({
   '--from': String, // input json-summary filename, by default "coverage/coverage-summary.json"
@@ -30,15 +31,6 @@ function getColor(coveredPercent) {
   return 'brightgreen'
 }
 
-function readCoverage(filename) {
-  if (!filename) {
-    filename = path.join(process.cwd(), 'coverage', 'coverage-summary.json')
-  }
-  debug('reading coverage summary from: %s', filename)
-  const coverage = require(filename)
-  return coverage.total.statements.pct
-}
-
 function updateBadge(args) {
   let pct = 0
   if (args['--set']) {
@@ -48,11 +40,7 @@ function updateBadge(args) {
   } else {
     pct = readCoverage(args['--from'])
   }
-  if (pct < 0) {
-    pct = 0
-  } else if (pct > 100) {
-    pct = 100
-  }
+  pct = toPercent(pct)
   debug('clamped coverage: %d', pct)
 
   const readmeFilename = path.join(process.cwd(), 'README.md')

@@ -35,6 +35,11 @@ jobs:
                 "context": "a test"
               }'
 
+      - name: Set commit using script
+        run: node bin/set-gh-status
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Set commit status 📫
         # variables available in GitHub container by default
         # https://help.github.com/en/actions/configuring-and-managing-workflows/using-environment-variables#default-environment-variables
