@@ -10,6 +10,7 @@ const debug = require('debug')('check-code-coverage')
  * @returns {number} Percentage from 0 to 100
  */
 function readCoverage(filename) {
+  debug('reading coverage from %o', { filename })
   if (!filename) {
     filename = path.join(process.cwd(), 'coverage', 'coverage-summary.json')
   }

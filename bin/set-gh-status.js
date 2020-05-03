@@ -3,8 +3,6 @@
 
 const got = require('got')
 const debug = require('debug')('check-code-coverage')
-const path = require('path')
-const fs = require('fs')
 const {readCoverage, toPercent} = require('..')
 
 const arg = require('arg')
@@ -15,8 +13,12 @@ const args = arg({
 debug('args: %o', args)
 
 async function setGitHubCommitStatus(options, envOptions) {
-  const pct = toPercent(readCoverage(options))
+  const pct = toPercent(readCoverage(options.filename))
   debug('setting commit coverage: %d', pct)
+  debug('with options %o', {
+    repository: envOptions.repository,
+    sha: envOptions.sha
+  })
 
   const url = `https://api.github.com/repos/${envOptions.repository}/statuses/${envOptions.sha}`
   // @ts-ignore
