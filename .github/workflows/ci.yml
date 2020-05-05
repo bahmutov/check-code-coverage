@@ -17,10 +17,7 @@ jobs:
           node bin/only-covered main1.js main2.js
 
       - name: Check totals 🛡
-        run: node bin/check-total --min 90
-
-      - name: Update code coverage badge 🥇
-        run: node bin/update-badge
+        run: node bin/check-total --min 30
 
       - name: Set commit status using REST
         # https://developer.github.com/v3/repos/statuses/
@@ -39,6 +36,14 @@ jobs:
         run: node bin/set-gh-status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check coverage change from README 📫
+        run: node bin/set-gh-status --check-against-readme
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update code coverage badge 🥇
+        run: node bin/update-badge
 
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
