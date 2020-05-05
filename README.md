@@ -100,6 +100,13 @@ This script reads the code coverage summary from `coverage/coverage-summary.json
 
 If there is a coverage badge in the README file, you can add 2nd status check. This check will read the code coverage from the README file (by parsing the badge text), then will set a failing status check if the coverage dropped more than 1 percent. **Tip:** use this check on pull requests to ensure tests and code are updated together before merging.
 
+```yaml
+- name: Ensure coverage has not dropped 📈
+  run: npx set-gh-status --check-against-readme
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
 ## Debug
 
 To see verbose log messages, run with `DEBUG=check-code-coverage` environment variable
