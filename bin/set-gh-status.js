@@ -117,6 +117,9 @@ function checkEnvVariables(env) {
 
 checkEnvVariables(process.env)
 
+debug('GH env variables: GITHUB_REPOSITORY %s GH_SHA %s GITHUB_SHA %s',
+  process.env.GITHUB_REPOSITORY, process.env.GH_SHA, process.env.GITHUB_SHA)
+
 const options = {
   filename: args['--file'],
   checkAgainstReadme: args['--check-against-readme']
