@@ -91,7 +91,7 @@ async function setGitHubCommitStatus(options, envOptions) {
         json: {
           context: 'code-coverage Δ',
           state: 'failure',
-          description: `decreased from ${readmePercent} to ${pct}%`
+          description: `decreased from ${readmePercent}% to ${pct}%`
         }
       })
     }
