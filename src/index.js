@@ -1,6 +1,7 @@
 // @ts-check
 
 const path = require('path')
+const fs = require('fs')
 const debug = require('debug')('check-code-coverage')
 
 /**
@@ -32,7 +33,53 @@ function toPercent(x) {
   return x
 }
 
+const availableColors = ['red', 'yellow', 'green', 'brightgreen']
+
+const availableColorsReStr = '(:?' + availableColors.join('|') + ')'
+
+function getCoverageRe() {
+  // note, Shields.io escaped '-' with '--'
+  const coverageRe = new RegExp(
+    `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`,
+  )
+  return coverageRe
+}
+
+function getColor(coveredPercent) {
+  if (coveredPercent < 60) {
+    return 'red'
+  }
+  if (coveredPercent < 80) {
+    return 'yellow'
+  }
+  if (coveredPercent < 90) {
+    return 'green'
+  }
+  return 'brightgreen'
+}
+
+function getCoverageBadge(pct) {
+  const color = getColor(pct) || 'lightgrey'
+  debug('for coverage %d% badge color "%s"', pct, color)
+
+  const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}%25-${color}`
+  return coverageBadge
+}
+
+function getCoverageFromReadme() {
+  const readmeFilename = path.join(process.cwd(), 'README.md')
+  const readmeText = fs.readFileSync(readmeFilename, 'utf8')
+
+}
+
 module.exports = {
   toPercent,
-  readCoverage
+  readCoverage,
+  badge: {
+    availableColors,
+    availableColorsReStr,
+    getCoverageFromReadme,
+    getCoverageRe,
+    getCoverageBadge
+  }
 }

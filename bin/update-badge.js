@@ -6,30 +6,13 @@ const path = require('path')
 const fs = require('fs')
 const os = require('os')
 const arg = require('arg')
-const {readCoverage, toPercent} = require('..')
+const {readCoverage, toPercent, badge} = require('..')
 
 const args = arg({
   '--from': String, // input json-summary filename, by default "coverage/coverage-summary.json"
   '--set': String // so we can convert "78%" into numbers ourselves
 })
 debug('args: %o', args)
-
-const availableColors = ['red', 'yellow', 'green', 'brightgreen']
-
-const availableColorsReStr = '(:?' + availableColors.join('|') + ')'
-
-function getColor(coveredPercent) {
-  if (coveredPercent < 60) {
-    return 'red'
-  }
-  if (coveredPercent < 80) {
-    return 'yellow'
-  }
-  if (coveredPercent < 90) {
-    return 'green'
-  }
-  return 'brightgreen'
-}
 
 function updateBadge(args) {
   let pct = 0
@@ -47,21 +30,15 @@ function updateBadge(args) {
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
 
   function replaceShield() {
-    const color = getColor(pct)
-    debug('for coverage %d% badge color "%s"', pct, color)
-    if (!availableColors.includes(color)) {
-      console.error('cannot pick code coverage color for %d%', pct)
-      console.error('color "%s" is invalid', color)
+    const coverageRe = badge.getCoverageRe()
+    debug('coverage regex: "%s"', coverageRe)
+
+    const coverageBadge = badge.getCoverageBadge(pct)
+    debug('new coverage badge: "%s"', coverageBadge)
+    if (!coverageBadge) {
+      console.error('cannot form new badge for %d%', pct)
       return readmeText
     }
-
-    // note, Shields.io escaped '-' with '--'
-    const coverageRe = new RegExp(
-      `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`,
-    )
-    const coverageBadge = `https://img.shields.io/badge/code--coverage-${pct}%25-${color}`
-    debug('coverage regex: "%s"', coverageRe)
-    debug('new coverage badge: "%s"', coverageBadge)
 
     let found
     let updatedReadmeText = readmeText.replace(
