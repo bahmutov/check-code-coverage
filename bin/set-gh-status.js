@@ -3,12 +3,13 @@
 
 const got = require('got')
 const debug = require('debug')('check-code-coverage')
-const {readCoverage, toPercent} = require('..')
+const {readCoverage, toPercent, badge} = require('..')
 
 const arg = require('arg')
 
 const args = arg({
-  '--from': String // input json-summary filename, by default "coverage/coverage-summary.json"
+  '--from': String, // input json-summary filename, by default "coverage/coverage-summary.json"
+  '--check-against-readme': Boolean
 })
 debug('args: %o', args)
 
@@ -46,6 +47,55 @@ async function setGitHubCommitStatus(options, envOptions) {
     }
   })
   console.log('response status: %d %s', res.statusCode, res.statusMessage)
+
+  if (options.checkAgainstReadme) {
+    const readmePercent = badge.getCoverageFromReadme()
+    if (typeof readmePercent !== 'number') {
+      console.error('Could not get code coverage percentage from README')
+      process.exit(1)
+    }
+
+    if (pct > readmePercent) {
+      console.log('coverage 📈 from %d% to %d%', readmePercent, pct)
+      // @ts-ignore
+      await got.post(url, {
+        headers: {
+          authorization: `Bearer ${envOptions.token}`
+        },
+        json: {
+          context: 'code-coverage Δ',
+          state: 'success',
+          description: `📈 from ${readmePercent}% to ${pct}%`
+        }
+      })
+    } else if (Math.abs(pct - readmePercent) < 1) {
+      console.log('coverage stayed the same %d% ~ %d%', readmePercent, pct)
+      // @ts-ignore
+      await got.post(url, {
+        headers: {
+          authorization: `Bearer ${envOptions.token}`
+        },
+        json: {
+          context: 'code-coverage Δ',
+          state: 'success',
+          description: `stayed the same at ${pct}%`
+        }
+      })
+    } else {
+      console.log('coverage 📉 from %d% to %d%', readmePercent, pct)
+      // @ts-ignore
+      await got.post(url, {
+        headers: {
+          authorization: `Bearer ${envOptions.token}`
+        },
+        json: {
+          context: 'code-coverage Δ',
+          state: 'failure',
+          description: `🔻 from ${readmePercent} to ${pct}%`
+        }
+      })
+    }
+  }
 }
 
 function checkEnvVariables(env) {
@@ -68,7 +118,8 @@ function checkEnvVariables(env) {
 checkEnvVariables(process.env)
 
 const options = {
-  filename: args['--file']
+  filename: args['--file'],
+  checkAgainstReadme: args['--check-against-readme']
 }
 const envOptions = {
   token: process.env.GITHUB_TOKEN,

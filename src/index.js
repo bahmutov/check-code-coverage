@@ -70,6 +70,19 @@ function getCoverageFromReadme() {
   const readmeFilename = path.join(process.cwd(), 'README.md')
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
 
+  const coverageRe = new RegExp(
+    `https://img\\.shields\\.io/badge/code--coverage-(\\d+)%25-${availableColorsReStr}`,
+  )
+  const matches = coverageRe.exec(readmeText)
+  console.log('matches', matches)
+  if (!matches) {
+    console.log('Could not find coverage badge in README')
+    return
+  }
+  debug('coverage badge "%s" percentage "%s"', matches[0], matches[1])
+  const pct = toPercent(parseFloat(matches[1]))
+  debug('parsed percentage: %d', pct)
+  return pct
 }
 
 module.exports = {
