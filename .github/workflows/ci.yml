@@ -17,7 +17,7 @@ jobs:
           node bin/only-covered main1.js main2.js
 
       - name: Check totals 🛡
-        run: node bin/check-total --min 90
+        run: node bin/check-total --min 30
 
       - name: Update code coverage badge 🥇
         run: node bin/update-badge
