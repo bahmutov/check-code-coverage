@@ -74,7 +74,7 @@ function getCoverageFromReadme() {
     `https://img\\.shields\\.io/badge/code--coverage-(\\d+)%25-${availableColorsReStr}`,
   )
   const matches = coverageRe.exec(readmeText)
-  console.log('matches', matches)
+
   if (!matches) {
     console.log('Could not find coverage badge in README')
     return
