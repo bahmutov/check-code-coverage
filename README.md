@@ -107,6 +107,8 @@ If there is a coverage badge in the README file, you can add 2nd status check. T
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
 
+![Coverage diff](images/coverage-diff.png)
+
 ## Debug
 
 To see verbose log messages, run with `DEBUG=check-code-coverage` environment variable
