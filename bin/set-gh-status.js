@@ -65,7 +65,7 @@ async function setGitHubCommitStatus(options, envOptions) {
         json: {
           context: 'code-coverage Δ',
           state: 'success',
-          description: `📈 from ${readmePercent}% to ${pct}%`
+          description: `went up from ${readmePercent}% to ${pct}%`
         }
       })
     } else if (Math.abs(pct - readmePercent) < 1) {
@@ -91,7 +91,7 @@ async function setGitHubCommitStatus(options, envOptions) {
         json: {
           context: 'code-coverage Δ',
           state: 'failure',
-          description: `🔻 from ${readmePercent} to ${pct}%`
+          description: `decreased from ${readmePercent} to ${pct}%`
         }
       })
     }
