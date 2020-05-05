@@ -109,6 +109,18 @@ If there is a coverage badge in the README file, you can add 2nd status check. T
 
 ![Coverage diff](images/coverage-diff.png)
 
+### Pull requests
+
+When setting a status on a GitHub pull request, you need to use SHA of the merged commit. You can pass it as `GH_SHA` environment variable.
+
+```yaml
+- name: Ensure coverage has not dropped 📈
+  run: npx set-gh-status --check-against-readme
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    GH_SHA: ${{ github.event.after }}
+```
+
 ## Debug
 
 To see verbose log messages, run with `DEBUG=check-code-coverage` environment variable
