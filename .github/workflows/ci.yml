@@ -40,6 +40,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Check coverage change from README 📫
+        run: node bin/set-gh-status --check-against-readme
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Semantic Release 🚀
         uses: cycjimmy/semantic-release-action@v2
         env:
