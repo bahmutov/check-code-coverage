@@ -9,6 +9,11 @@ npm i -D check-code-coverage
 npx only-covered foo.js bar.js
 ```
 
+Watch these short videos to see these tools in action:
+- [Check code coverage robustly using 3rd party tool](https://youtu.be/dwU5gUG2-EM)
+- [Adding code coverage badge to your project](https://youtu.be/bNVRxb-MKGo)
+- [Show code coverage in commit status check](https://youtu.be/AAl4HmJ3YuM)
+
 ## check-coverage
 
 Checks if the file is present in the output JSON file and has 100% statement coverage
