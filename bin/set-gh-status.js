@@ -3,13 +3,14 @@
 
 const got = require('got')
 const debug = require('debug')('check-code-coverage')
-const {readCoverage, toPercent, badge} = require('..')
+const { readCoverage, toPercent, badge } = require('..')
 
 const arg = require('arg')
 
 const args = arg({
   '--from': String, // input json-summary filename, by default "coverage/coverage-summary.json"
-  '--check-against-readme': Boolean
+  '--check-against-readme': Boolean,
+  '--readme': String, // target readme to check or update
 })
 debug('args: %o', args)
 
@@ -18,7 +19,7 @@ async function setGitHubCommitStatus(options, envOptions) {
   debug('setting commit coverage: %d', pct)
   debug('with options %o', {
     repository: envOptions.repository,
-    sha: envOptions.sha
+    sha: envOptions.sha,
   })
 
   // REST call to GitHub API
@@ -38,18 +39,21 @@ async function setGitHubCommitStatus(options, envOptions) {
   // @ts-ignore
   const res = await got.post(url, {
     headers: {
-      authorization: `Bearer ${envOptions.token}`
+      authorization: `Bearer ${envOptions.token}`,
     },
     json: {
       context: 'code-coverage',
       state: 'success',
-      description: `${pct}% of statements`
-    }
+      description: `${pct}% of statements`,
+    },
   })
   console.log('response status: %d %s', res.statusCode, res.statusMessage)
 
   if (options.checkAgainstReadme) {
-    const readmePercent = badge.getCoverageFromReadme()
+    const readmePercent = options.customReadme
+      ? badge.getCoverageFromReadme(options.customReadme)
+      : badge.getCoverageFromReadme()
+
     if (typeof readmePercent !== 'number') {
       console.error('Could not get code coverage percentage from README')
       process.exit(1)
@@ -60,39 +64,39 @@ async function setGitHubCommitStatus(options, envOptions) {
       // @ts-ignore
       await got.post(url, {
         headers: {
-          authorization: `Bearer ${envOptions.token}`
+          authorization: `Bearer ${envOptions.token}`,
         },
         json: {
           context: 'code-coverage Δ',
           state: 'success',
-          description: `went up from ${readmePercent}% to ${pct}%`
-        }
+          description: `went up from ${readmePercent}% to ${pct}%`,
+        },
       })
     } else if (Math.abs(pct - readmePercent) < 1) {
       console.log('coverage stayed the same %d% ~ %d%', readmePercent, pct)
       // @ts-ignore
       await got.post(url, {
         headers: {
-          authorization: `Bearer ${envOptions.token}`
+          authorization: `Bearer ${envOptions.token}`,
         },
         json: {
           context: 'code-coverage Δ',
           state: 'success',
-          description: `stayed the same at ${pct}%`
-        }
+          description: `stayed the same at ${pct}%`,
+        },
       })
     } else {
       console.log('coverage 📉 from %d% to %d%', readmePercent, pct)
       // @ts-ignore
       await got.post(url, {
         headers: {
-          authorization: `Bearer ${envOptions.token}`
+          authorization: `Bearer ${envOptions.token}`,
         },
         json: {
           context: 'code-coverage Δ',
           state: 'failure',
-          description: `decreased from ${readmePercent}% to ${pct}%`
-        }
+          description: `decreased from ${readmePercent}% to ${pct}%`,
+        },
       })
     }
   }
@@ -117,21 +121,26 @@ function checkEnvVariables(env) {
 
 checkEnvVariables(process.env)
 
-debug('GH env variables: GITHUB_REPOSITORY %s GH_SHA %s GITHUB_SHA %s',
-  process.env.GITHUB_REPOSITORY, process.env.GH_SHA, process.env.GITHUB_SHA)
+debug(
+  'GH env variables: GITHUB_REPOSITORY %s GH_SHA %s GITHUB_SHA %s',
+  process.env.GITHUB_REPOSITORY,
+  process.env.GH_SHA,
+  process.env.GITHUB_SHA
+)
 
 const options = {
   filename: args['--file'],
-  checkAgainstReadme: args['--check-against-readme']
+  checkAgainstReadme: args['--check-against-readme'],
+  customReadme: args['--readme'],
 }
 const envOptions = {
   token: process.env.GITHUB_TOKEN,
   repository: process.env.GITHUB_REPOSITORY,
   // allow overriding the commit SHA, useful in pull requests
   // where we want a merged commit SHA from GH event
-  sha: process.env.GH_SHA || process.env.GITHUB_SHA
+  sha: process.env.GH_SHA || process.env.GITHUB_SHA,
 }
-setGitHubCommitStatus(options, envOptions).catch(e => {
+setGitHubCommitStatus(options, envOptions).catch((e) => {
   console.error(e)
   process.exit(1)
 })

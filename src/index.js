@@ -40,7 +40,7 @@ const availableColorsReStr = '(:?' + availableColors.join('|') + ')'
 function getCoverageRe() {
   // note, Shields.io escaped '-' with '--'
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`
   )
   return coverageRe
 }
@@ -66,12 +66,13 @@ function getCoverageBadge(pct) {
   return coverageBadge
 }
 
-function getCoverageFromReadme() {
-  const readmeFilename = path.join(__dirname, 'README.md')
+function getCoverageFromReadme(
+  readmeFilename = path.join(__dirname, 'README.md')
+) {
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
 
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-(\\d+)%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-(\\d+)%25-${availableColorsReStr}`
   )
   const matches = coverageRe.exec(readmeText)
 
@@ -93,6 +94,6 @@ module.exports = {
     availableColorsReStr,
     getCoverageFromReadme,
     getCoverageRe,
-    getCoverageBadge
-  }
+    getCoverageBadge,
+  },
 }
