@@ -40,7 +40,7 @@ const availableColorsReStr = '(:?' + availableColors.join('|') + ')'
 function getCoverageRe() {
   // note, Shields.io escaped '-' with '--'
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-\\d+%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-[1-9]\d?|\d+\.?\d+%25-${availableColorsReStr}`,
   )
   return coverageRe
 }
@@ -71,7 +71,7 @@ function getCoverageFromReadme() {
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
 
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-(\\d+)%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-([1-9]\d?|\d+\.?\d+)%25-${availableColorsReStr}`,
   )
   const matches = coverageRe.exec(readmeText)
 
