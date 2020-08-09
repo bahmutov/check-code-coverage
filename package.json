@@ -12,10 +12,11 @@
   },
   "files": [
     "bin",
-    "src"
+    "src",
+    "!src/test.js"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava src/test.js",
     "semantic-release": "semantic-release"
   },
   "repository": {
@@ -35,6 +36,7 @@
   },
   "homepage": "https://github.com/bahmutov/check-code-coverage#readme",
   "devDependencies": {
+    "ava": "3.11.1",
     "semantic-release": "^17.0.4"
   },
   "dependencies": {

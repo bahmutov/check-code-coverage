@@ -39,8 +39,9 @@ const availableColorsReStr = '(:?' + availableColors.join('|') + ')'
 
 function getCoverageRe() {
   // note, Shields.io escaped '-' with '--'
+  // should match the expression in getCoverageFromText
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-[1-9]\d?|\d+\.?\d+%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-\\d+(\\.?\\d+)?%25-${availableColorsReStr}`,
   )
   return coverageRe
 }
@@ -70,14 +71,24 @@ function getCoverageFromReadme() {
   const readmeFilename = path.join(process.cwd(), 'README.md')
   debug('reading the README from %s', readmeFilename)
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
+  return getCoverageFromText(readmeText)
+}
 
+/**
+ * Given Markdown text, finds the code coverage badge and
+ * extracts the percentage number.
+ * @returns {number|undefined} Returns converted percentage if found
+ */
+function getCoverageFromText(text) {
+  // should match the expression in "getCoverageRe" function
   const coverageRe = new RegExp(
-    `https://img\\.shields\\.io/badge/code--coverage-([1-9]\d?|\d+\.?\d+)%25-${availableColorsReStr}`,
+    `https://img\\.shields\\.io/badge/code--coverage-(\\d+(\\.?\\d+)?)%25-${availableColorsReStr}`,
   )
-  const matches = coverageRe.exec(readmeText)
+  const matches = coverageRe.exec(text)
 
   if (!matches) {
-    console.log('Could not find coverage badge in README %s', readmeFilename)
+    console.log('Could not find coverage badge in the given text')
+    console.log('text\n---\n' + text + '\n---')
     return
   }
   debug('coverage badge "%s" percentage "%s"', matches[0], matches[1])
@@ -93,6 +104,7 @@ module.exports = {
     availableColors,
     availableColorsReStr,
     getCoverageFromReadme,
+    getCoverageFromText,
     getCoverageRe,
     getCoverageBadge
   }
