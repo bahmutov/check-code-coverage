@@ -68,6 +68,7 @@ function getCoverageBadge(pct) {
 
 function getCoverageFromReadme() {
   const readmeFilename = path.join(process.cwd(), 'README.md')
+  debug('reading the README from %s', readmeFilename)
   const readmeText = fs.readFileSync(readmeFilename, 'utf8')
 
   const coverageRe = new RegExp(
@@ -76,7 +77,7 @@ function getCoverageFromReadme() {
   const matches = coverageRe.exec(readmeText)
 
   if (!matches) {
-    console.log('Could not find coverage badge in README')
+    console.log('Could not find coverage badge in README %s', readmeFilename)
     return
   }
   debug('coverage badge "%s" percentage "%s"', matches[0], matches[1])
