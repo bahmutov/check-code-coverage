@@ -37,6 +37,7 @@
   "homepage": "https://github.com/bahmutov/check-code-coverage#readme",
   "devDependencies": {
     "ava": "3.11.1",
+    "prettier": "2.1.2",
     "semantic-release": "^17.0.4"
   },
   "dependencies": {

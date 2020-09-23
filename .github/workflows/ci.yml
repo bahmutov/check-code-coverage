@@ -18,6 +18,8 @@ jobs:
           node bin/check-coverage main1.js
           node bin/check-coverage to/main2.js
           node bin/only-covered main1.js main2.js
+          # and can check multiple files at once
+          node bin/check-coverage main1.js main2.js
 
       - name: Check totals 🛡
         run: node bin/check-total --min 30
