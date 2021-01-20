@@ -56,6 +56,7 @@ async function setGitHubCommitStatus(options, envOptions) {
 
     if (typeof readmePercent !== 'number') {
       console.error('Could not get code coverage percentage from README')
+      console.error('readmePercent is', readmePercent)
       process.exit(1)
     }
 

@@ -1,4 +1,5 @@
 # check-code-coverage [![ci status][ci image]][ci url] ![check-code-coverage](https://img.shields.io/badge/code--coverage-100%25-brightgreen)
+
 > Utilities for checking the coverage produced by NYC against extra or missing files
 
 ## Use
@@ -10,6 +11,7 @@ npx only-covered foo.js bar.js
 ```
 
 Watch these short videos to see these tools in action:
+
 - [Check code coverage robustly using 3rd party tool](https://youtu.be/dwU5gUG2-EM)
 - [Adding code coverage badge to your project](https://youtu.be/bNVRxb-MKGo)
 - [Show code coverage in commit status check](https://youtu.be/AAl4HmJ3YuM)
@@ -29,6 +31,12 @@ The file has to end with "main.js". You can specify part of the path, like this
 
 ```shell
 npx check-coverage src/app/main.js
+```
+
+You can pass multiple filenames
+
+```shell
+npx check-coverage main.js src/person.js
 ```
 
 ## only-covered
@@ -51,6 +59,8 @@ check-total
 # with default options
 check-total --from coverage/coverage-summary.json --min 80
 ```
+
+The command exits with 0 if the total is above or equal to the minimum number. If the code coverage is below the minimum, the command exits with code 1. On most CIs any command exiting with non-zero code fails the build.
 
 ## update-badge
 
@@ -92,7 +102,7 @@ If you run your tests on [GitHub Actions](https://glebbahmutov.com/blog/trying-g
 
 ```yaml
 - name: Set code coverage commit status 📫
-  run: npx set-gh-status
+  run: npx -p check-code-coverage set-gh-status
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -107,7 +117,7 @@ If there is a coverage badge in the README file, you can add 2nd status check. T
 
 ```yaml
 - name: Ensure coverage has not dropped 📈
-  run: npx set-gh-status --check-against-readme
+  run: npx -p check-code-coverage set-gh-status --check-against-readme
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -120,7 +130,7 @@ When setting a status on a GitHub pull request, you need to use SHA of the merge
 
 ```yaml
 - name: Ensure coverage has not dropped 📈
-  run: npx set-gh-status --check-against-readme
+  run: npx -p check-code-coverage set-gh-status --check-against-readme
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     GH_SHA: ${{ github.event.after }}
