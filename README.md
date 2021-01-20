@@ -60,6 +60,8 @@ check-total
 check-total --from coverage/coverage-summary.json --min 80
 ```
 
+The command exits with 0 if the total is above or equal to the minimum number. If the code coverage is below the minimum, the command exits with code 1. On most CIs any command exiting with non-zero code fails the build.
+
 ## update-badge
 
 If your README.md includes Shields.io badge, like this
