@@ -36,14 +36,14 @@
   },
   "homepage": "https://github.com/bahmutov/check-code-coverage#readme",
   "devDependencies": {
-    "ava": "3.11.1",
-    "prettier": "2.1.2",
-    "semantic-release": "^17.0.4"
+    "ava": "^3.11.1",
+    "prettier": "^2.1.2",
+    "semantic-release": "^19.0.2"
   },
   "dependencies": {
-    "arg": "4.1.3",
-    "debug": "4.1.1",
-    "got": "11.1.0",
-    "lodash": "4.17.15"
+    "arg": "^4.1.3",
+    "debug": "^4.1.1",
+    "got": "^11.1.0",
+    "lodash": "^4.17.15"
   }
 }
