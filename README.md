@@ -113,6 +113,13 @@ Which should show a commit status message like:
 
 This script reads the code coverage summary from `coverage/coverage-summary.json` by default (you can specific a different file name using `--from` option) and posts the commit status, always passing for now.
 
+**Note:** to write the commit status, the GitHub token needs "write" permission, so set it in your workflow file:
+
+```yml
+permissions:
+  statuses: write
+```
+
 If there is a coverage badge in the README file, you can add 2nd status check. This check will read the code coverage from the README file (by parsing the badge text), then will set a failing status check if the coverage dropped more than 1 percent. **Tip:** use this check on pull requests to ensure tests and code are updated together before merging.
 
 ```yaml
